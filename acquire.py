@@ -1,15 +1,3 @@
-"""
-A module for obtaining repo readme and language data from the github API.
-
-Before using this module, read through it, and follow the instructions marked
-TODO.
-
-After doing so, run it like this:
-
-    python acquire.py
-
-To create the `data.json` file that contains the data.
-"""
 import os
 import json
 from typing import Dict, List, Optional, Union, cast
@@ -24,11 +12,6 @@ from env import github_token, github_username
 # TODO: Add your github username to your env.py file under the variable `github_username`
 # TODO: Add more repositories to the `REPOS` list below.
 
-REPOS = [
-    "gocodeup/codeup-setup-script",
-    "gocodeup/movies-application",
-    "torvalds/linux",
-]
 
 headers = {"Authorization": f"token {github_token}", "User-Agent": github_username}
 
@@ -83,7 +66,7 @@ def get_readme_download_url(files: List[Dict[str, str]]) -> str:
     for file in files:
         if file["name"].lower().startswith("readme"):
             return file["download_url"]
-    return ""
+    raise Exception("README file not found in repository")
 
 
 def process_repo(repo: str) -> Dict[str, str]:
@@ -92,11 +75,11 @@ def process_repo(repo: str) -> Dict[str, str]:
     dictionary with the language of the repo and the readme contents.
     """
     contents = get_repo_contents(repo)
-    readme_download_url = get_readme_download_url(contents)
-    if readme_download_url == "":
-        readme_contents = ""
-    else:
+    try:
+        readme_download_url = get_readme_download_url(contents)
         readme_contents = requests.get(readme_download_url).text
+    except Exception:
+        readme_contents = ""
     return {
         "repo": repo,
         "language": get_repo_language(repo),
