@@ -130,3 +130,6 @@ def explore_plots(train):
                             wspace=0.4,
                             hspace=0.4)
     plt.show()
+    
+    
+    
