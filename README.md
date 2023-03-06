@@ -1,7 +1,7 @@
 # NLP-MVP
 
 # Project Description
-Github is an online version control system that stores your code history. Repsositories are made to store different files that are written in various programming languages and named; usually based on what is inside the repository. The format for the repository titles are user_name/title. A github search query was made for COVID-19 and repository file titles were scraped and stored in a .json file. Natural Language Processing was applied to the README files in each repository and words were analyzed. A machine learning algoritm was applied to the information obtained from the natural language processing statifying on programming language in order to predict primary programming language of repository. 
+Github is an online version control system that stores your code history. Repsositories are made to store different files that are written in various programming languages and named; usually based on what is inside the repository. The format for the repository titles are user_name/title. A github search query was made for COVID-19 and repository file titles were scraped and stored in a .json file. Natural Language Processing was applied to the README files in each repository and words were analyzed. A machine learning algorithm was applied to the information obtained from the natural language processing stratifying on programming language in order to predict primary programming language of repository. 
 
 # Project Goals
 * Identify popular words that are associated with certain programming languages using natural language processing
@@ -46,7 +46,7 @@ There are similarities in READMEs with the same programming language. We will be
 # Takeaways and Conclusion
 
 
-# Reccomendations
+# Recomendations
 * Increase the dataset by scraping more repos from github
 * come up with a way to put more weight on words with an IDF when developing model
 * Explore different ways and combinations to create machine learning model
