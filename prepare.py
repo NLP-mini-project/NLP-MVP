@@ -132,3 +132,13 @@ def prep_data(df, column, extra_words=[], exclude_words=[]):
     df['lemmatized'] = df['clean'].apply(lemmatize)
     
     return df[['repo', 'language', 'clean', 'stemmed', 'lemmatized']]
+
+def seperate_language(df):
+    
+    desired_languages = ['Python', 'JavaScript', 'Jupyter Notebook', 'HTML', 'R']
+
+    mask = df['language'].isin(desired_languages)
+
+    df['language'] = pd.np.where(mask, df['language'], 'others')
+
+    return df
