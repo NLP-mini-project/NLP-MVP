@@ -143,13 +143,26 @@ def models(df, stem_or_lem):
     acc_train = logit.score(X_train, y_train)
     acc_val = logit.score(X_val, y_val)
     
+    #Random Forest
+    
+    rf = RandomForestClassifier(max_depth = 2, min_samples_leaf = 9,
+                                random_state = random_state, n_estimators = 200)
+    rf = rf.fit(X_train, y_train)
+    
+    in_accuracy = rf.score(X_train, y_train)
+    out_accuracy = rf.score(X_val, y_val)
+    
+    
     #Baseline
     baseline_model(df, stem_or_lem)
     baseline = (y_train =='others').mean()
     
-    dff = pd.DataFrame({'model': ['Decision Tree', 'KNN', 'Logistic Regression', 'baseline'],
-                      'train_accuracy': [in_sample_accuracy, accuracy_train, acc_train, baseline],
-                      'validate_accuracy': [out_of_sample_accuracy, accuracy_val, acc_val, baseline]})
+    dff = pd.DataFrame({'model': ['Decision Tree', 'KNN', 'Logistic Regression', 
+                                  'Random Forest', 'Baseline'],
+                      'train_accuracy': [in_sample_accuracy, accuracy_train,
+                                         acc_train, in_accuracy ,baseline],
+                      'validate_accuracy': [out_of_sample_accuracy, accuracy_val,
+                                            acc_val, out_accuracy, baseline]})
 
     return dff.sort_values('validate_accuracy', ascending = False)
 
