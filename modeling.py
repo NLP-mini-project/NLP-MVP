@@ -188,6 +188,10 @@ def best_model(df, stem_or_lem):
     accuracy_val = knn.score(X_val, y_val)
     accuracy_test = knn.score(X_test, y_test)
     
+    #Baseline
+    baseline_model(df, stem_or_lem)
+    baseline = (y_train =='others').mean()
+    
     df = pd.DataFrame({'model': ['KNN','baseline'],
                       'train_accuracy': [accuracy_train, baseline],
                       'validate_accuracy': [accuracy_val, baseline],
