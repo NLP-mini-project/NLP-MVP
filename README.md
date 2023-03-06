@@ -37,3 +37,11 @@ There are similarities in READMEs with the same programming language. We will be
 |readme_contents| The raw contents of the readme for the repository.|
 |stemmed| The contents of the readme after they have been stemmed.|
 |lemmatized| The contents of the readme after they have been lemmatized.|
+
+# Steps to Reproduce
+
+1) Clone this repo.
+2) Acquire the csv files from data.world
+3) Combine both csvs into one DataFrame with Pandas, creating the wine_type column
+4) Save the new DataFrame as 'wine_quality.csv'
+5) Run notebook.
