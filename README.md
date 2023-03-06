@@ -44,7 +44,11 @@ There are similarities in READMEs with the same programming language. We will be
 5) Run notebook.
 
 # Takeaways and Conclusions
-
+* The READMEs from github are not necessarily a good idea to predict programming language of repository.
+* Python, JavaScript, HTML, and R were among the top languages used in the repositories.
+* There are some words that are more common among repos of a particular programming language.
+* The top 10 most commonly used words were the same among all the languages. 
+* Words with a high IDF were nonsenical
 
 # Recommendations
 * Increase the dataset by scraping more repos from github
