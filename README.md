@@ -41,7 +41,4 @@ There are similarities in READMEs with the same programming language. We will be
 # Steps to Reproduce
 
 1) Clone this repo.
-2) Acquire the csv files from data.world
-3) Combine both csvs into one DataFrame with Pandas, creating the wine_type column
-4) Save the new DataFrame as 'wine_quality.csv'
 5) Run notebook.
