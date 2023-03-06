@@ -45,9 +45,12 @@ def shape_split_data():
     
 def baseline_model(df, stem_or_lem, ngram_range = (1,1)):
     
+    random_seed = 42
+    
     X_train, y_train, X_val, y_val, X_test, y_test = split_cv_models(df, stem_or_lem, ngram_range = (1,1))
     
     baseline = (y_train =='others').mean()
+    
     print(f'The baseline accuracy is {baseline:.2%}')
     
 def cv_model(df, stem_or_lem, ngram_range = (1,1)):
@@ -111,3 +114,64 @@ def tf_idf_model(df, stem_or_lem):
     tftree.fit(X_train, y_train)
 
     print(f'Accuracy Score: {tftree.score(X_val, y_val) * 100:.2f}%')
+    
+    
+def models(df, stem_or_lem):
+    
+    random_state = 42
+    
+    X_train, y_train, X_val, y_val, X_test, y_test = split_tf_idf_data(df, stem_or_lem)
+    
+    #Tree model
+    tftree = DecisionTreeClassifier(max_depth = 2, random_state=random_state)
+    tftree.fit(X_train, y_train)
+
+    in_sample_accuracy = tftree.score(X_train, y_train)
+    out_of_sample_accuracy = tftree.score(X_val, y_val)
+
+    # KNN model
+    knn = KNeighborsClassifier(n_neighbors = 7)
+    knn = knn.fit(X_train, y_train)
+
+    accuracy_train = knn.score(X_train, y_train)
+    accuracy_val = knn.score(X_val, y_val)
+    
+    #Logistic Regression
+    logit = LogisticRegression(random_state = random_state)
+    logit.fit(X_train, y_train)
+
+    acc_train = logit.score(X_train, y_train)
+    acc_val = logit.score(X_val, y_val)
+    
+    #Baseline
+    baseline_model(df, stem_or_lem)
+    baseline = (y_train =='others').mean()
+    
+    dff = pd.DataFrame({'model': ['Decision Tree', 'KNN', 'Logistic Regression', 'baseline'],
+                      'train_accuracy': [in_sample_accuracy, accuracy_train, acc_train, baseline],
+                      'validate_accuracy': [out_of_sample_accuracy, accuracy_val, acc_val, baseline]})
+
+    return dff.sort_values('validate_accuracy', ascending = False)
+
+
+def best_model(df, stem_or_lem):
+    
+    random_state = 42
+    
+    X_train, y_train, X_val, y_val, X_test, y_test = split_tf_idf_data(df, stem_or_lem)
+    
+    knn = KNeighborsClassifier(n_neighbors = 7)
+    knn = knn.fit(X_train, y_train)
+
+    accuracy_train = knn.score(X_train, y_train)
+    accuracy_val = knn.score(X_val, y_val)
+    accuracy_test = knn.score(X_test, y_test)
+    
+    df = pd.DataFrame({'model': ['KNN','baseline'],
+                      'train_accuracy': [accuracy_train, baseline],
+                      'validate_accuracy': [accuracy_val, baseline],
+                      'test_accuracy': [accuracy_test, baseline]})
+
+    
+    return df
+    
