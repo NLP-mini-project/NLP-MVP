@@ -11,7 +11,22 @@ from nltk.corpus import stopwords
 
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
 
+
+ADDITIONAL_STOPWORDS = ['covid19', 'coronavirus']
+
+def clean(text):
+    'A simple function to cleanup text data'
+    wnl = nltk.stem.WordNetLemmatizer()
+    stopwords = nltk.corpus.stopwords.words('english') + ADDITIONAL_STOPWORDS
+    text = (unicodedata.normalize('NFKD', text)
+             .encode('ascii', 'ignore')
+             .decode('utf-8', 'ignore')
+             .lower())
+    words = re.sub(r'[^\w\s]', '', text).split()
+    return [wnl.lemmatize(word) for word in words if word not in stopwords]
 
 
 
@@ -28,13 +43,13 @@ def explore_q2(train):
     this function will print out the dataframe for words in each language 
     '''
     
-    other_words = clean(' '.join(train[train.language == 'others'].readme_contents))
-    js_words = clean(' '.join(train[train.language == 'JavaScript'].readme_contents))
-    py_words = clean(' '.join(train[train.language == 'Python'].readme_contents))
-    jn_words = clean(' '.join(train[train.language == 'Jupyter Notebook'].readme_contents))
-    html_words = clean(' '.join(train[train.language == 'HTML'].readme_contents))
-    r_words = clean(' '.join(train[train.language == 'R'].readme_contents))
-    all_words = clean(' '.join(train.readme_contents))
+    other_words = clean(' '.join(train[train.language == 'others'].lemmatized))
+    js_words = clean(' '.join(train[train.language == 'JavaScript'].lemmatized))
+    py_words = clean(' '.join(train[train.language == 'Python'].lemmatized))
+    jn_words = clean(' '.join(train[train.language == 'Jupyter Notebook'].lemmatized))
+    html_words = clean(' '.join(train[train.language == 'HTML'].lemmatized))
+    r_words = clean(' '.join(train[train.language == 'R'].lemmatized))
+    all_words = clean(' '.join(train.lemmatized))
     
     other_freq = pd.Series(other_words).value_counts()
     js_freq = pd.Series(js_words).value_counts()
@@ -49,7 +64,36 @@ def explore_q2(train):
                 .fillna(0)
                 .apply(lambda s: s.astype(int)))
 
-    return word_counts['all'].sort_values(by='all', ascending=False).head(20)
+    return word_counts.sort_values(by='all', ascending=False).head(20)
+
+
+
+
+def words(train):
+    other_words = clean(' '.join(train[train.language == 'others'].lemmatized))
+    js_words = clean(' '.join(train[train.language == 'JavaScript'].lemmatized))
+    py_words = clean(' '.join(train[train.language == 'Python'].lemmatized))
+    jn_words = clean(' '.join(train[train.language == 'Jupyter Notebook'].lemmatized))
+    html_words = clean(' '.join(train[train.language == 'HTML'].lemmatized))
+    r_words = clean(' '.join(train[train.language == 'R'].lemmatized))
+
+    all_words = clean(' '.join(train.lemmatized))
+    
+    
+    other_freq = pd.Series(other_words).value_counts()
+    js_freq = pd.Series(js_words).value_counts()
+    py_freq = pd.Series(py_words).value_counts()
+    jn_freq = pd.Series(jn_words).value_counts()
+    html_freq = pd.Series(html_words).value_counts()
+    r_freq = pd.Series(r_words).value_counts()
+    all_freq = pd.Series(all_words).value_counts()
+    
+    
+    word_counts = (pd.concat([all_freq, other_freq, js_freq, py_freq, jn_freq, html_freq, r_freq], axis=1, sort=True)
+                .set_axis(['all', 'other', 'js', 'py', 'jn', 'html', 'r'], axis=1, inplace=False)
+                .fillna(0)
+                .apply(lambda s: s.astype(int)))
+    return word_counts
 
 
 def explore_plots(train):
