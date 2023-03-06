@@ -43,10 +43,10 @@ There are similarities in READMEs with the same programming language. We will be
 1) Clone this repo.
 5) Run notebook.
 
-# Takeaways and Conclusion
+# Takeaways and Conclusions
 
 
 # Recommendations
 * Increase the dataset by scraping more repos from github
-* come up with a way to put more weight on words with an IDF when developing model
+* Come up with a way to put more weight on words with an IDF when developing model
 * Explore different ways and combinations to create machine learning model
