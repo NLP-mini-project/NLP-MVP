@@ -26,3 +26,13 @@ There are similarities in READMEs with the same programming language. We will be
    * Evaluate models on train and validate data
    * Select the best model based on accuracy
    * Evaluate the best model on test data
+   
+# Data Dictionary
+
+| Feature | Definition |
+|:--------|:-----------|
+|repo| The file path of the repository on github.|
+|language| The programming language that the readme of the repository is written in.|
+|readme_contents| The raw contents of the readme for the repository.|
+|stemmed| The contents of the readme after they have been stemmed.|
+|lemmatized| The contents of the readme after they have been lemmatized.|
