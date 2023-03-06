@@ -46,7 +46,7 @@ There are similarities in READMEs with the same programming language. We will be
 # Takeaways and Conclusion
 
 
-# Recomendations
+# Recommendations
 * Increase the dataset by scraping more repos from github
 * come up with a way to put more weight on words with an IDF when developing model
 * Explore different ways and combinations to create machine learning model
