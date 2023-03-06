@@ -1,6 +1,10 @@
 import pandas as pd
 import numpy as np 
 
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+import seaborn as sns
+
 from pprint import pprint
 import unicodedata
 import re
@@ -11,10 +15,14 @@ from nltk.tokenize.toktok import ToktokTokenizer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from nltk.corpus import stopwords
+
 
 #function to split data for Count models including bi/tri-grams models
 def split_cv_models(df, stem_or_lem, ngram_range = (1,1)): 
