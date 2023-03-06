@@ -26,7 +26,8 @@ There are similarities in READMEs with the same programming language. We will be
    * Evaluate models on train and validate data
    * Select the best model based on accuracy
    * Evaluate the best model on test data
-   
+* Draw conclusions
+
 # Data Dictionary
 
 | Feature | Definition |
